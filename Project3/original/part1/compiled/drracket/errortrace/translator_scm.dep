@@ -1,0 +1,1 @@
+("8.2" tarm64osx ("654e5d15672c2e22ee0c62fcbee9593e8d07f53f" . "328aff6bc6c7f4709912fee3778abd763a322190") #"/Users/eceguz/Downloads/Project3Part2/environments.scm" #"/Users/eceguz/Downloads/Project3Part2/lang.scm" (collects #"eopl" #"eopl.rkt") (collects #"errortrace" #"errortrace-key.rkt"))

@@ -1,0 +1,46 @@
+positive-const  -->  #(struct:a-program #(struct:const-exp 11))
+
+negative-const  -->  #(struct:a-program #(struct:const-exp -33))
+
+nested-arith-left  -->  #(struct:a-program #(struct:diff-exp #(struct:diff-exp #(struct:const-exp 44) #(struct:const-exp 33)) #(struct:const-exp 22)))
+
+nested-arith-right  -->  #(struct:a-program #(struct:diff-exp #(struct:const-exp 55) #(struct:diff-exp #(struct:const-exp 22) #(struct:const-exp 11))))
+
+if-true  -->  #(struct:a-program #(struct:if-exp #(struct:zero?-exp #(struct:const-exp 0)) #(struct:const-exp 3) #(struct:const-exp 4)))
+
+if-false  -->  #(struct:a-program #(struct:if-exp #(struct:zero?-exp #(struct:const-exp 1)) #(struct:const-exp 3) #(struct:const-exp 4)))
+
+no-bool-to-diff-1  -->  #(struct:a-program #(struct:diff-exp #(struct:zero?-exp #(struct:const-exp 0)) #(struct:const-exp 1)))
+
+if-eval-test-true  -->  #(struct:a-program #(struct:if-exp #(struct:zero?-exp #(struct:diff-exp #(struct:const-exp 11) #(struct:const-exp 11))) #(struct:const-exp 3) #(struct:const-exp 4)))
+
+if-eval-test-false  -->  #(struct:a-program #(struct:if-exp #(struct:zero?-exp #(struct:diff-exp #(struct:const-exp 11) #(struct:const-exp 12))) #(struct:const-exp 3) #(struct:const-exp 4)))
+
+simple-let-1  -->  #(struct:a-program #(struct:let-exp x1 #(struct:const-exp 3) #(struct:var-exp x1)))
+
+eval-let-body  -->  #(struct:a-program #(struct:let-exp x1 #(struct:const-exp 3) #(struct:diff-exp #(struct:var-exp x1) #(struct:const-exp 1))))
+
+eval-let-rhs  -->  #(struct:a-program #(struct:let-exp x1 #(struct:diff-exp #(struct:const-exp 4) #(struct:const-exp 1)) #(struct:diff-exp #(struct:var-exp x1) #(struct:const-exp 1))))
+
+simple-nested-let  -->  #(struct:a-program #(struct:let-exp x1 #(struct:const-exp 3) #(struct:let-exp y1 #(struct:const-exp 4) #(struct:diff-exp #(struct:var-exp x1) #(struct:var-exp y1)))))
+
+check-shadowing-in-body  -->  #(struct:a-program #(struct:let-exp x1 #(struct:const-exp 3) #(struct:let-exp x2 x has been reinitialized. x2 is created and shadows x1. #(struct:const-exp 4) #(struct:var-exp x2))))
+
+check-shadowing-in-rhs  -->  #(struct:a-program #(struct:let-exp x1 #(struct:const-exp 3) #(struct:let-exp x2 x has been reinitialized. x2 is created and shadows x1. #(struct:diff-exp #(struct:var-exp x1) #(struct:const-exp 1)) #(struct:var-exp x2))))
+
+apply-proc-in-rator-pos  -->  #(struct:a-program #(struct:call-exp #(struct:proc-exp x1 #(struct:diff-exp #(struct:var-exp x1) #(struct:const-exp 1))) #(struct:const-exp 30)))
+
+apply-simple-proc  -->  #(struct:a-program #(struct:let-exp f1 #(struct:proc-exp x1 #(struct:diff-exp #(struct:var-exp x1) #(struct:const-exp 1))) #(struct:call-exp #(struct:var-exp f1) #(struct:const-exp 30))))
+
+let-to-proc-1  -->  #(struct:a-program #(struct:call-exp #(struct:proc-exp f1 #(struct:call-exp #(struct:var-exp f1) #(struct:const-exp 30))) #(struct:proc-exp x1 #(struct:diff-exp #(struct:var-exp x1) #(struct:const-exp 1)))))
+
+nested-procs  -->  #(struct:a-program #(struct:call-exp #(struct:call-exp #(struct:proc-exp x1 #(struct:proc-exp y1 #(struct:diff-exp #(struct:var-exp x1) #(struct:var-exp y1)))) #(struct:const-exp 5)) #(struct:const-exp 6)))
+
+nested-procs2  -->  #(struct:a-program #(struct:let-exp f1 #(struct:proc-exp x1 #(struct:proc-exp y1 #(struct:diff-exp #(struct:var-exp x1) #(struct:var-exp y1)))) #(struct:call-exp #(struct:call-exp #(struct:var-exp f1) #(struct:diff-exp #(struct:const-exp 10) #(struct:const-exp 5))) #(struct:const-exp 6))))
+
+y-combinator-1  -->  #(struct:a-program #(struct:let-exp fix1 #(struct:proc-exp f1 #(struct:let-exp d1 #(struct:proc-exp x1 #(struct:proc-exp z1 #(struct:call-exp #(struct:call-exp #(struct:var-exp f1) #(struct:call-exp #(struct:var-exp x1) #(struct:var-exp x1))) #(struct:var-exp z1)))) #(struct:proc-exp n1 #(struct:call-exp #(struct:call-exp #(struct:var-exp f1) #(struct:call-exp #(struct:var-exp d1) #(struct:var-exp d1))) #(struct:var-exp n1))))) #(struct:let-exp t4m1 #(struct:proc-exp f1 #(struct:proc-exp x1 #(struct:if-exp #(struct:zero?-exp #(struct:var-exp x1)) #(struct:const-exp 0) #(struct:diff-exp #(struct:call-exp #(struct:var-exp f1) #(struct:diff-exp #(struct:var-exp x1) #(struct:const-exp 1))) #(struct:const-exp -4))))) #(struct:let-exp times41 #(struct:call-exp #(struct:var-exp fix1) #(struct:var-exp t4m1)) #(struct:call-exp #(struct:var-exp times41) #(struct:const-exp 3))))))
+
+let-shadowing1 --> #(struct:a-program #(struct:let-exp x1 #(struct:const-exp 10) #(struct:let-exp x2 x has been reinitialized. x2 is created and shadows x1. #(struct:const-exp 10) #(struct:call-exp #(struct:proc-exp x3 x has been reinitialized. x3 is created and shadows x2. #(struct:diff-exp #(struct:var-exp x3) #(struct:const-exp 3))) #(struct:const-exp 4)))))
+
+let-shadowing2 --> #(struct:a-program #(struct:let-exp x1 #(struct:const-exp 5) #(struct:let-exp y1 #(struct:const-exp 10) #(struct:let-exp y2 y has been reinitialized. y2 is created and shadows y1. #(struct:const-exp 5) #(struct:let-exp z1 #(struct:const-exp 4) #(struct:call-exp #(struct:proc-exp x2 x has been reinitialized. x2 is created and shadows x1. #(struct:diff-exp #(struct:var-exp x2) #(struct:const-exp 3))) #(struct:const-exp 4)))))))
+
